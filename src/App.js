@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useCookies } from 'react-cookie';
 import './App.css';
 
 function App() {
@@ -6,18 +7,21 @@ function App() {
   const[userAge,setUserAge]=useState('');
   const[name,setName]=useState('');
   const[age,setAge]=useState('');
+  const[cookies,setCookies]=useCookies('');
  
    const handleSubmit=()=>{
     localStorage.setItem('name',userName);
     localStorage.setItem('age',userAge);
     sessionStorage.setItem('name',userName);
     sessionStorage.setItem('age',userAge);
-    document.cookie=('name',userName)
+    setCookies('name',userName);
+    setCookies('age',userAge);
+    
    }
   
    const handleGet=()=>{
     setName(localStorage.getItem('name'));
-    setAge(localStorage.getItem('age'))
+    setAge(localStorage.getItem('age'));
    }
 
    const handleClear=()=>{
@@ -42,8 +46,10 @@ function App() {
         <td>{name}</td>
         <td>{age}</td>
       </tr>
-
     </table>
+    <h3>Data in cookiesStorage</h3>
+      <p>Name:{cookies.name}</p>
+      <p>Age:{cookies.age}</p>
    </React.Fragment>
   );
 }
