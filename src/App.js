@@ -28,6 +28,17 @@ function App() {
     localStorage.clear()
    }
 
+   const addDataIntoCache = (cacheName,url,userName)=>{
+    const data = new Response(JSON.stringify(userName))
+
+    if('caches' in window){
+         caches.open(cacheName).then((cache)=>{
+          cache.put(url,data)
+         })
+    }
+   }
+
+
   return (
    <React.Fragment>
     <input type='text' placeholder='username' onChange={(event)=>setUserName(event.target.value)}></input>
@@ -50,6 +61,8 @@ function App() {
     <h3>Data in cookiesStorage</h3>
       <p>Name:{cookies.name}</p>
       <p>Age:{cookies.age}</p>
+      <button onClick={()=>addDataIntoCache('MyCache',
+      'https://localhost:3000','kelly')} >add data to cache storage</button>
    </React.Fragment>
   );
 }
